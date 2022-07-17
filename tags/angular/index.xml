@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Angular on pompolly</title>
+    <link>https://blog.pompolly.com/tags/angular/</link>
+    <description>Recent content in Angular on pompolly</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 08 Apr 2022 13:18:28 +0900</lastBuildDate><atom:link href="https://blog.pompolly.com/tags/angular/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Angular] カスタムパイプを複数モジュールで使用する</title>
+      <link>https://blog.pompolly.com/posts/2022/angular-custom-pipe-more-modules/</link>
+      <pubDate>Fri, 08 Apr 2022 13:18:28 +0900</pubDate>
+      
+      <guid>https://blog.pompolly.com/posts/2022/angular-custom-pipe-more-modules/</guid>
+      <description>Angularで作成したカスタムパイプを複数モジュールで使用したい。  カスタムパイプを複数モジュール構成で使用すると下記エラーが発生する。 error NG8004: No pipe found with name &amp;#39;&amp;#39;.  共有モジュールを作成しexport-importをすることで解決する。(参考: Sharing Modules | Angular) ※下記、モジュール名やパイプ名、各パスは適切な値に変更すること。  1. 共有モジュールを作成  モジュール作成のコマンド ng g module Shared   2. 共有モジュールにカスタムパイプについて記述  shared.module.tsファイルに下記を記述。  import import { CustomPipe } from &amp;#39;./pipe/custom.pipe&amp;#39;;  declarations declarations: [ CustomPipe ]  exports exports: [ CustomPipe ]     3. 使用したいモジュールに共有モジュールをインポート  例えば、app.module.tsファイルに下記を記述するとAppModuleで使用可能になる。  import import { SharedModule } from &amp;#39;./shared/shared.module&amp;#39;;  imports imports: [ SharedModule ]      メモ。 app.</description>
+    </item>
+    
+  </channel>
+</rss>

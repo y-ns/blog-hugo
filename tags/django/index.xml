@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Django on pompolly</title>
+    <link>https://blog.pompolly.com/tags/django/</link>
+    <description>Recent content in Django on pompolly</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 22 May 2022 16:27:52 +0900</lastBuildDate><atom:link href="https://blog.pompolly.com/tags/django/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Django &#43; venv] インストールからプロジェクト作成まで</title>
+      <link>https://blog.pompolly.com/posts/2022/django-install/</link>
+      <pubDate>Sun, 22 May 2022 16:27:52 +0900</pubDate>
+      
+      <guid>https://blog.pompolly.com/posts/2022/django-install/</guid>
+      <description>環境  Python 3.10.4 Django 4.0.4  インストールからプロジェクト作成までの簡単メモ。  参考: Documentation | django  # 仮想環境の構築 % python3 -m venv myvenv # 仮想環境に入る % cd myvenv % source bin/activate # Djangoのインストール (myvenv) % pip install django # バージョンの確認 (myvenv) % python -m django --version # プロジェクトの作成 (myvenv) % django-admin startproject myproject # 開発用サーバの起動 (myvenv) % cd myproject (myvenv) % python manage.py runserver  http://127.0.0.1:8000/ へアクセス。  The install worked successfully! Congratulations!</description>
+    </item>
+    
+  </channel>
+</rss>

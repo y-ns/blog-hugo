@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SEO on pompolly</title>
+    <link>https://blog.pompolly.com/tags/seo/</link>
+    <description>Recent content in SEO on pompolly</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 14 Mar 2022 22:32:06 +0900</lastBuildDate><atom:link href="https://blog.pompolly.com/tags/seo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[SEO対策] Hugo &#43; Google Search Console</title>
+      <link>https://blog.pompolly.com/posts/2022/seo-google-search-console/</link>
+      <pubDate>Mon, 14 Mar 2022 22:32:06 +0900</pubDate>
+      
+      <guid>https://blog.pompolly.com/posts/2022/seo-google-search-console/</guid>
+      <description>まずは単語の予習/復習から。 SEO  Search Engine Optimization、検索エンジン最適化 検索エンジンによる検索結果で上位に表示させる。検索からユーザを流入しやすくする。 上記の対策を「SEO対策」と呼ぶ。  Google Search Console  検索エンジン「Google」での検索結果の改善に役立つ無料のサービス。 参考: Search Console の概要 | Search Console ヘルプ  クローラ  Webサイトの情報収集を行う自動巡回プログラムのこと。  インデックス  クローラが収集した情報をデータベースに登録すること。 これらを利用して検索結果を表示する。  XMLサイトマップ  いわゆる「サイトマップ」と呼ばれる、サイトの地図や目次みたいなもの。 クローラが情報収集を行う際に参照するファイル。参照頻度は低め。 基本的にはサイトのページ全てが記述されているためサイズが大きい。  RSSフィード  いわゆる「フィード」と呼ばれる、サイトの更新情報が記述されているもの。 クローラが情報収集を行う際に参照するファイル。参照頻度は高め。 更新情報のみなのでサイズは小さい。  robots.txt  クローラの巡回をブロックしたいページを記述したファイル。 ページ数が多い場合に作成し、重要なページに効率的にクロールできるようにする。  noindex  &amp;lt;meta name=&amp;quot;robots&amp;quot; content=&amp;quot;noindex&amp;quot;&amp;gt; インデックスさせたくないページに設定するmetaタグ。 検索結果に表示させたくない場合に設定する。   Hugoで作成したWebサイトのSEO対策を行う。  作業時間: 30分 (+反映まで1週間) 目標: 「Hugoで作成したWebサイトのSEO対策を行う」 環境:  macOS Big Sur hugo v0.</description>
+    </item>
+    
+  </channel>
+</rss>

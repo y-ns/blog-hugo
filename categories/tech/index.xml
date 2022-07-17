@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tech on pompolly</title>
+    <link>https://blog.pompolly.com/categories/tech/</link>
+    <description>Recent content in tech on pompolly</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 22 May 2022 16:27:52 +0900</lastBuildDate><atom:link href="https://blog.pompolly.com/categories/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Django &#43; venv] インストールからプロジェクト作成まで</title>
+      <link>https://blog.pompolly.com/posts/2022/django-install/</link>
+      <pubDate>Sun, 22 May 2022 16:27:52 +0900</pubDate>
+      
+      <guid>https://blog.pompolly.com/posts/2022/django-install/</guid>
+      <description>環境  Python 3.10.4 Django 4.0.4  インストールからプロジェクト作成までの簡単メモ。  参考: Documentation | django  # 仮想環境の構築 % python3 -m venv myvenv # 仮想環境に入る % cd myvenv % source bin/activate # Djangoのインストール (myvenv) % pip install django # バージョンの確認 (myvenv) % python -m django --version # プロジェクトの作成 (myvenv) % django-admin startproject myproject # 開発用サーバの起動 (myvenv) % cd myproject (myvenv) % python manage.py runserver  http://127.0.0.1:8000/ へアクセス。  The install worked successfully! Congratulations!</description>
+    </item>
+    
+    <item>
+      <title>[Angular] カスタムパイプを複数モジュールで使用する</title>
+      <link>https://blog.pompolly.com/posts/2022/angular-custom-pipe-more-modules/</link>
+      <pubDate>Fri, 08 Apr 2022 13:18:28 +0900</pubDate>
+      
+      <guid>https://blog.pompolly.com/posts/2022/angular-custom-pipe-more-modules/</guid>
+      <description>Angularで作成したカスタムパイプを複数モジュールで使用したい。  カスタムパイプを複数モジュール構成で使用すると下記エラーが発生する。 error NG8004: No pipe found with name &amp;#39;&amp;#39;.  共有モジュールを作成しexport-importをすることで解決する。(参考: Sharing Modules | Angular) ※下記、モジュール名やパイプ名、各パスは適切な値に変更すること。  1. 共有モジュールを作成  モジュール作成のコマンド ng g module Shared   2. 共有モジュールにカスタムパイプについて記述  shared.module.tsファイルに下記を記述。  import import { CustomPipe } from &amp;#39;./pipe/custom.pipe&amp;#39;;  declarations declarations: [ CustomPipe ]  exports exports: [ CustomPipe ]     3. 使用したいモジュールに共有モジュールをインポート  例えば、app.module.tsファイルに下記を記述するとAppModuleで使用可能になる。  import import { SharedModule } from &amp;#39;./shared/shared.module&amp;#39;;  imports imports: [ SharedModule ]      メモ。 app.</description>
+    </item>
+    
+    <item>
+      <title>[SEO対策] Hugo &#43; Google Search Console</title>
+      <link>https://blog.pompolly.com/posts/2022/seo-google-search-console/</link>
+      <pubDate>Mon, 14 Mar 2022 22:32:06 +0900</pubDate>
+      
+      <guid>https://blog.pompolly.com/posts/2022/seo-google-search-console/</guid>
+      <description>まずは単語の予習/復習から。 SEO  Search Engine Optimization、検索エンジン最適化 検索エンジンによる検索結果で上位に表示させる。検索からユーザを流入しやすくする。 上記の対策を「SEO対策」と呼ぶ。  Google Search Console  検索エンジン「Google」での検索結果の改善に役立つ無料のサービス。 参考: Search Console の概要 | Search Console ヘルプ  クローラ  Webサイトの情報収集を行う自動巡回プログラムのこと。  インデックス  クローラが収集した情報をデータベースに登録すること。 これらを利用して検索結果を表示する。  XMLサイトマップ  いわゆる「サイトマップ」と呼ばれる、サイトの地図や目次みたいなもの。 クローラが情報収集を行う際に参照するファイル。参照頻度は低め。 基本的にはサイトのページ全てが記述されているためサイズが大きい。  RSSフィード  いわゆる「フィード」と呼ばれる、サイトの更新情報が記述されているもの。 クローラが情報収集を行う際に参照するファイル。参照頻度は高め。 更新情報のみなのでサイズは小さい。  robots.txt  クローラの巡回をブロックしたいページを記述したファイル。 ページ数が多い場合に作成し、重要なページに効率的にクロールできるようにする。  noindex  &amp;lt;meta name=&amp;quot;robots&amp;quot; content=&amp;quot;noindex&amp;quot;&amp;gt; インデックスさせたくないページに設定するmetaタグ。 検索結果に表示させたくない場合に設定する。   Hugoで作成したWebサイトのSEO対策を行う。  作業時間: 30分 (+反映まで1週間) 目標: 「Hugoで作成したWebサイトのSEO対策を行う」 環境:  macOS Big Sur hugo v0.</description>
+    </item>
+    
+    <item>
+      <title>GitHub Pagesと独自ドメイン</title>
+      <link>https://blog.pompolly.com/posts/2022/gh-pages-custom-domain/</link>
+      <pubDate>Fri, 04 Mar 2022 22:27:04 +0900</pubDate>
+      
+      <guid>https://blog.pompolly.com/posts/2022/gh-pages-custom-domain/</guid>
+      <description>GitHub Pagesに独自ドメインを適応する。  作業時間: 30分 目標: 「GitHub Pagesに独自ドメインを適応」 環境: hugo v0.82.0+extended darwin/amd64 参考: カスタムドメインとGitHub Pagesについて | GitHub Docs  1. 独自ドメインを取得  Google Domains で取得。  2. DNSを登録  サブドメインを使用したのでCNAMEレコードを追加。  3. GitHub Pagesに独自ドメインを適応  GitHub画面 &amp;gt; Settings &amp;gt; Pages  Custom domain に独自ドメインを入力 Save   作成されたCNAMEファイルをpull Enforce HTTPS にチェックでHTTPS暗号化 適応完了!   メモ。 GitHub Docsを参考に進めていけばOK。</description>
+    </item>
+    
+    <item>
+      <title>Hugo &#43; GitHub Pagesでブログをはじめる</title>
+      <link>https://blog.pompolly.com/posts/2022/hugo-gh-pages-blog/</link>
+      <pubDate>Thu, 03 Mar 2022 22:49:20 +0900</pubDate>
+      
+      <guid>https://blog.pompolly.com/posts/2022/hugo-gh-pages-blog/</guid>
+      <description>Hugo + GitHub Pagesでブログをはじめる。  静的サイトジェネレーター(SSG)の「Hugo」と 静的サイトのホスティングサービス「GitHub Pages」を使って簡単にブログをつくる。  つくってみる。  作業時間: 1時間 目標: 「Hugoで作成したサイトをGitHub Pagesで公開」 環境:  macOS Big Sur hugo v0.82.0+extended darwin/amd64   参考:  Hugo GitHub Pages    1. Hugoをインストール % brew install hugo 2. サイトを作成 % hugo new site サイトの名前 3. テーマを選ぶ  Hugo Themes 選んだテーマページに記載されているインストール方法に従う。 当ブログのThemeは Cactusです🙏  4. 起動 % hugo server 5. Gitリポジトリと紐付け % git init % git add . % git commit -m &amp;#34;first commit&amp;#34; % git remote add git rm --cached --origin リポジトリのURL % git push -u origin main 6.</description>
+    </item>
+    
+  </channel>
+</rss>

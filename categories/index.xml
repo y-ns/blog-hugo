@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on pompolly</title>
+    <link>https://blog.pompolly.com/categories/</link>
+    <description>Recent content in Categories on pompolly</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 22 May 2022 16:27:52 +0900</lastBuildDate><atom:link href="https://blog.pompolly.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>tech</title>
+      <link>https://blog.pompolly.com/categories/tech/</link>
+      <pubDate>Sun, 22 May 2022 16:27:52 +0900</pubDate>
+      
+      <guid>https://blog.pompolly.com/categories/tech/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

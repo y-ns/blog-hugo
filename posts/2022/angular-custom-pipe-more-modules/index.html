@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <script type="text/javascript" src="https://latest.cactus.chat/cactus.js"></script>
+  <link rel="stylesheet" href="https://latest.cactus.chat/style.css" type="text/css">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> [Angular] カスタムパイプを複数モジュールで使用する | pompolly</title>
+  <link rel = 'canonical' href = 'https://blog.pompolly.com/posts/2022/angular-custom-pipe-more-modules/'>
+  <meta name="description" content="Angularで作成したカスタムパイプを複数モジュールで使用したい。  カスタムパイプを複数モジュール構成で使用すると下記エラーが発生する。 error NG8004: No pipe found with name &amp;#39;&amp;#39;.  共有モジュールを作成しexport-importをすることで解決する。(参考: Sharing Modules | Angular) ※下記、モジュール名やパイプ名、各パスは適切な値に変更すること。  1. 共有モジュールを作成  モジュール作成のコマンド ng g module Shared   2. 共有モジュールにカスタムパイプについて記述  shared.module.tsファイルに下記を記述。  import import { CustomPipe } from &amp;#39;./pipe/custom.pipe&amp;#39;;  declarations declarations: [ CustomPipe ]  exports exports: [ CustomPipe ]     3. 使用したいモジュールに共有モジュールをインポート  例えば、app.module.tsファイルに下記を記述するとAppModuleで使用可能になる。  import import { SharedModule } from &amp;#39;./shared/shared.module&amp;#39;;  imports imports: [ SharedModule ]      メモ。 app."/>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="[Angular] カスタムパイプを複数モジュールで使用する" />
+<meta property="og:description" content="Angularで作成したカスタムパイプを複数モジュールで使用したい。  カスタムパイプを複数モジュール構成で使用すると下記エラーが発生する。 error NG8004: No pipe found with name &#39;&#39;.  共有モジュールを作成しexport-importをすることで解決する。(参考: Sharing Modules | Angular) ※下記、モジュール名やパイプ名、各パスは適切な値に変更すること。  1. 共有モジュールを作成  モジュール作成のコマンド ng g module Shared   2. 共有モジュールにカスタムパイプについて記述  shared.module.tsファイルに下記を記述。  import import { CustomPipe } from &#39;./pipe/custom.pipe&#39;;  declarations declarations: [ CustomPipe ]  exports exports: [ CustomPipe ]     3. 使用したいモジュールに共有モジュールをインポート  例えば、app.module.tsファイルに下記を記述するとAppModuleで使用可能になる。  import import { SharedModule } from &#39;./shared/shared.module&#39;;  imports imports: [ SharedModule ]      メモ。 app." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.pompolly.com/posts/2022/angular-custom-pipe-more-modules/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-08T13:18:28&#43;09:00" />
+<meta property="article:modified_time" content="2022-04-08T13:18:28&#43;09:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[Angular] カスタムパイプを複数モジュールで使用する"/>
+<meta name="twitter:description" content="Angularで作成したカスタムパイプを複数モジュールで使用したい。  カスタムパイプを複数モジュール構成で使用すると下記エラーが発生する。 error NG8004: No pipe found with name &#39;&#39;.  共有モジュールを作成しexport-importをすることで解決する。(参考: Sharing Modules | Angular) ※下記、モジュール名やパイプ名、各パスは適切な値に変更すること。  1. 共有モジュールを作成  モジュール作成のコマンド ng g module Shared   2. 共有モジュールにカスタムパイプについて記述  shared.module.tsファイルに下記を記述。  import import { CustomPipe } from &#39;./pipe/custom.pipe&#39;;  declarations declarations: [ CustomPipe ]  exports exports: [ CustomPipe ]     3. 使用したいモジュールに共有モジュールをインポート  例えば、app.module.tsファイルに下記を記述するとAppModuleで使用可能になる。  import import { SharedModule } from &#39;./shared/shared.module&#39;;  imports imports: [ SharedModule ]      メモ。 app."/>
+
+  
+  
+  
+  <link rel="stylesheet" href="https://blog.pompolly.com/css/styles.94f653e9e151e28067a7c5dbbc4600cbd5a3c721e79faaf971e523c40f3b249b8e4f20bb57810dfffa8d559ca5c140fd56eb4cd9c0853113ad08e66afdb08bdd.css" integrity="sha512-lPZT6eFR4oBnp8XbvEYAy9WjxyHnn6r5ceUjxA87JJuOTyC7V4EN//qNVZylwUD9VutM2cCFMROtCOZq/bCL3Q=="> 
+
+  
+   <link rel="stylesheet" href="https://blog.pompolly.com/css/custom.css"> 
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://blog.pompolly.com/images/favicon.ico" />
+
+  
+  
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+  <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;" aria-label="Top of Page"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">Writings</a></li>
+         
+        <li><a href="/categories">Categories</a></li>
+         
+        <li><a href="/about">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li>
+          <a class="icon" href=" https://blog.pompolly.com/posts/2022/seo-google-search-console/" aria-label="Previous">
+            <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i>
+          </a>
+        </li>
+        
+        
+        <li>
+          <a class="icon" href="https://blog.pompolly.com/posts/2022/django-install/" aria-label="Next">
+            <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i>
+          </a>
+        </li>
+        
+        <li>
+          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" aria-label="Top of Page">
+            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i>
+          </a>
+        </li>
+        <li>
+          <a class="icon" href="#" aria-label="Share">
+            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
+          </a>
+        </li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fblog.pompolly.com%2fposts%2f2022%2fangular-custom-pipe-more-modules%2f" aria-label="Facebook">
+      <i class="fab fa-facebook " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fblog.pompolly.com%2fposts%2f2022%2fangular-custom-pipe-more-modules%2f&text=%5bAngular%5d%20%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%82%92%e8%a4%87%e6%95%b0%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a7%e4%bd%bf%e7%94%a8%e3%81%99%e3%82%8b" aria-label="Twitter">
+      <i class="fab fa-twitter " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fblog.pompolly.com%2fposts%2f2022%2fangular-custom-pipe-more-modules%2f&title=%5bAngular%5d%20%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%82%92%e8%a4%87%e6%95%b0%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a7%e4%bd%bf%e7%94%a8%e3%81%99%e3%82%8b" aria-label="Linkedin">
+      <i class="fab fa-linkedin " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fblog.pompolly.com%2fposts%2f2022%2fangular-custom-pipe-more-modules%2f&is_video=false&description=%5bAngular%5d%20%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%82%92%e8%a4%87%e6%95%b0%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a7%e4%bd%bf%e7%94%a8%e3%81%99%e3%82%8b" aria-label="Pinterest">
+      <i class="fab fa-pinterest " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=%5bAngular%5d%20%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%82%92%e8%a4%87%e6%95%b0%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a7%e4%bd%bf%e7%94%a8%e3%81%99%e3%82%8b&body=Check out this article: https%3a%2f%2fblog.pompolly.com%2fposts%2f2022%2fangular-custom-pipe-more-modules%2f" aria-label="Email">
+      <i class="fas fa-envelope " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fblog.pompolly.com%2fposts%2f2022%2fangular-custom-pipe-more-modules%2f&title=%5bAngular%5d%20%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%82%92%e8%a4%87%e6%95%b0%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a7%e4%bd%bf%e7%94%a8%e3%81%99%e3%82%8b" aria-label="Pocket">
+      <i class="fab fa-get-pocket " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fblog.pompolly.com%2fposts%2f2022%2fangular-custom-pipe-more-modules%2f&title=%5bAngular%5d%20%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%82%92%e8%a4%87%e6%95%b0%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a7%e4%bd%bf%e7%94%a8%e3%81%99%e3%82%8b" aria-label="reddit">
+      <i class="fab fa-reddit " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fblog.pompolly.com%2fposts%2f2022%2fangular-custom-pipe-more-modules%2f&name=%5bAngular%5d%20%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%82%92%e8%a4%87%e6%95%b0%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a7%e4%bd%bf%e7%94%a8%e3%81%99%e3%82%8b&description=Angular%e3%81%a7%e4%bd%9c%e6%88%90%e3%81%97%e3%81%9f%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%82%92%e8%a4%87%e6%95%b0%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a7%e4%bd%bf%e7%94%a8%e3%81%97%e3%81%9f%e3%81%84%e3%80%82%20%20%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%82%92%e8%a4%87%e6%95%b0%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e6%a7%8b%e6%88%90%e3%81%a7%e4%bd%bf%e7%94%a8%e3%81%99%e3%82%8b%e3%81%a8%e4%b8%8b%e8%a8%98%e3%82%a8%e3%83%a9%e3%83%bc%e3%81%8c%e7%99%ba%e7%94%9f%e3%81%99%e3%82%8b%e3%80%82%20error%20NG8004%3a%20No%20pipe%20found%20with%20name%20%26%2339%3b%26%2339%3b.%20%20%e5%85%b1%e6%9c%89%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%82%92%e4%bd%9c%e6%88%90%e3%81%97export-import%e3%82%92%e3%81%99%e3%82%8b%e3%81%93%e3%81%a8%e3%81%a7%e8%a7%a3%e6%b1%ba%e3%81%99%e3%82%8b%e3%80%82%28%e5%8f%82%e8%80%83%3a%20Sharing%20Modules%20%7c%20Angular%29%20%e2%80%bb%e4%b8%8b%e8%a8%98%e3%80%81%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e5%90%8d%e3%82%84%e3%83%91%e3%82%a4%e3%83%97%e5%90%8d%e3%80%81%e5%90%84%e3%83%91%e3%82%b9%e3%81%af%e9%81%a9%e5%88%87%e3%81%aa%e5%80%a4%e3%81%ab%e5%a4%89%e6%9b%b4%e3%81%99%e3%82%8b%e3%81%93%e3%81%a8%e3%80%82%20%201.%20%e5%85%b1%e6%9c%89%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%82%92%e4%bd%9c%e6%88%90%20%20%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e4%bd%9c%e6%88%90%e3%81%ae%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%20ng%20g%20module%20Shared%20%20%202.%20%e5%85%b1%e6%9c%89%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%ab%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%81%ab%e3%81%a4%e3%81%84%e3%81%a6%e8%a8%98%e8%bf%b0%20%20shared.module.ts%e3%83%95%e3%82%a1%e3%82%a4%e3%83%ab%e3%81%ab%e4%b8%8b%e8%a8%98%e3%82%92%e8%a8%98%e8%bf%b0%e3%80%82%20%20import%20import%20%7b%20CustomPipe%20%7d%20from%20%26%2339%3b.%2fpipe%2fcustom.pipe%26%2339%3b%3b%20%20declarations%20declarations%3a%20%5b%20CustomPipe%20%5d%20%20exports%20exports%3a%20%5b%20CustomPipe%20%5d%20%20%20%20%203.%20%e4%bd%bf%e7%94%a8%e3%81%97%e3%81%9f%e3%81%84%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%ab%e5%85%b1%e6%9c%89%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%82%92%e3%82%a4%e3%83%b3%e3%83%9d%e3%83%bc%e3%83%88%20%20%e4%be%8b%e3%81%88%e3%81%b0%e3%80%81app.module.ts%e3%83%95%e3%82%a1%e3%82%a4%e3%83%ab%e3%81%ab%e4%b8%8b%e8%a8%98%e3%82%92%e8%a8%98%e8%bf%b0%e3%81%99%e3%82%8b%e3%81%a8AppModule%e3%81%a7%e4%bd%bf%e7%94%a8%e5%8f%af%e8%83%bd%e3%81%ab%e3%81%aa%e3%82%8b%e3%80%82%20%20import%20import%20%7b%20SharedModule%20%7d%20from%20%26%2339%3b.%2fshared%2fshared.module%26%2339%3b%3b%20%20imports%20imports%3a%20%5b%20SharedModule%20%5d%20%20%20%20%20%20%e3%83%a1%e3%83%a2%e3%80%82%20app." aria-label="Tumblr">
+      <i class="fab fa-tumblr " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fblog.pompolly.com%2fposts%2f2022%2fangular-custom-pipe-more-modules%2f&t=%5bAngular%5d%20%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%82%92%e8%a4%87%e6%95%b0%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a7%e4%bd%bf%e7%94%a8%e3%81%99%e3%82%8b" aria-label="Hacker News">
+      <i class="fab fa-hacker-news " aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+    
+    <div id="toc">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#angularで作成したカスタムパイプを複数モジュールで使用したい">Angularで作成したカスタムパイプを複数モジュールで使用したい。</a>
+      <ul>
+        <li><a href="#1-共有モジュールを作成">1. 共有モジュールを作成</a></li>
+        <li><a href="#2-共有モジュールにカスタムパイプについて記述">2. 共有モジュールにカスタムパイプについて記述</a></li>
+        <li><a href="#3-使用したいモジュールに共有モジュールをインポート">3. 使用したいモジュールに共有モジュールをインポート</a></li>
+        <li><a href="#メモ">メモ。</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+  </span>
+</div>
+
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 class="posttitle" itemprop="name headline">
+        [Angular] カスタムパイプを複数モジュールで使用する
+      </h1>
+      <div class="meta">
+        
+        <div class="postdate">
+          
+          <time datetime="2022-04-08 13:18:28 &#43;0900 JST" itemprop="datePublished">2022-04-08</time>
+          
+        </div>
+        
+        
+        
+        <div class="article-category">
+            <i class="fas fa-archive"></i>
+            
+            
+            <a class="category-link" href="/categories/tech">tech</a>
+            
+        </div>
+        
+        
+        <div class="article-tag">
+            <i class="fas fa-tag"></i>
+            
+            
+            <a class="tag-link" href="/tags/angular" rel="tag">Angular</a>
+            
+        </div>
+        
+      </div>
+    </header>
+
+  
+    
+    <div class="content" itemprop="articleBody">
+      <h2 id="angularで作成したカスタムパイプを複数モジュールで使用したい">Angularで作成したカスタムパイプを複数モジュールで使用したい。</h2>
+<ul>
+<li>カスタムパイプを複数モジュール構成で使用すると下記エラーが発生する。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">    error NG8004: No pipe found with name &#39;&#39;.
+</code></pre></div></li>
+<li>共有モジュールを作成しexport-importをすることで解決する。(参考: <a href="https://angular.io/guide/sharing-ngmodules" target="_blank">Sharing Modules | Angular</a>)</li>
+<li>※下記、モジュール名やパイプ名、各パスは適切な値に変更すること。</li>
+</ul>
+<h3 id="1-共有モジュールを作成">1. 共有モジュールを作成</h3>
+<ul>
+<li>モジュール作成のコマンド
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">    ng g module Shared
+</code></pre></div></li>
+</ul>
+<h3 id="2-共有モジュールにカスタムパイプについて記述">2. 共有モジュールにカスタムパイプについて記述</h3>
+<ul>
+<li>shared.module.tsファイルに下記を記述。
+<ul>
+<li>import
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">    <span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">CustomPipe</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;./pipe/custom.pipe&#39;</span>;
+</code></pre></div></li>
+<li>declarations
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">    <span style="color:#a6e22e">declarations</span><span style="color:#f92672">:</span> [
+        <span style="color:#a6e22e">CustomPipe</span>
+    ]
+</code></pre></div></li>
+<li>exports
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">    <span style="color:#a6e22e">exports</span><span style="color:#f92672">:</span> [
+        <span style="color:#a6e22e">CustomPipe</span>
+    ]
+</code></pre></div></li>
+</ul>
+</li>
+</ul>
+<h3 id="3-使用したいモジュールに共有モジュールをインポート">3. 使用したいモジュールに共有モジュールをインポート</h3>
+<ul>
+<li>例えば、app.module.tsファイルに下記を記述するとAppModuleで使用可能になる。
+<ul>
+<li>import
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">    <span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">SharedModule</span> } <span style="color:#66d9ef">from</span> <span style="color:#e6db74">&#39;./shared/shared.module&#39;</span>;
+</code></pre></div></li>
+<li>imports
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-typescript" data-lang="typescript">    <span style="color:#a6e22e">imports</span><span style="color:#f92672">:</span> [
+        <span style="color:#a6e22e">SharedModule</span>
+    ]
+</code></pre></div></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="メモ">メモ。</h3>
+<p>app.module.tsは(ルートモジュールなので)exportはできない。共有モジュールを作成し、exportをすること。<br>
+(参考: <a href="https://angular.io/guide/architecture-modules" target="_blank">Introduction to modules | Angular</a>)</p>
+
+    </div>
+  </article>
+
+  
+  
+
+
+
+
+
+
+  <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/posts">Writings</a></li>
+         
+          <li><a href="/categories">Categories</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    
+    <div id="toc-footer" style="display: none">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#angularで作成したカスタムパイプを複数モジュールで使用したい">Angularで作成したカスタムパイプを複数モジュールで使用したい。</a>
+      <ul>
+        <li><a href="#1-共有モジュールを作成">1. 共有モジュールを作成</a></li>
+        <li><a href="#2-共有モジュールにカスタムパイプについて記述">2. 共有モジュールにカスタムパイプについて記述</a></li>
+        <li><a href="#3-使用したいモジュールに共有モジュールをインポート">3. 使用したいモジュールに共有モジュールをインポート</a></li>
+        <li><a href="#メモ">メモ。</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+
+    <div id="share-footer" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fblog.pompolly.com%2fposts%2f2022%2fangular-custom-pipe-more-modules%2f" aria-label="Facebook">
+      <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fblog.pompolly.com%2fposts%2f2022%2fangular-custom-pipe-more-modules%2f&text=%5bAngular%5d%20%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%82%92%e8%a4%87%e6%95%b0%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a7%e4%bd%bf%e7%94%a8%e3%81%99%e3%82%8b" aria-label="Twitter">
+      <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fblog.pompolly.com%2fposts%2f2022%2fangular-custom-pipe-more-modules%2f&title=%5bAngular%5d%20%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%82%92%e8%a4%87%e6%95%b0%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a7%e4%bd%bf%e7%94%a8%e3%81%99%e3%82%8b" aria-label="Linkedin">
+      <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fblog.pompolly.com%2fposts%2f2022%2fangular-custom-pipe-more-modules%2f&is_video=false&description=%5bAngular%5d%20%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%82%92%e8%a4%87%e6%95%b0%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a7%e4%bd%bf%e7%94%a8%e3%81%99%e3%82%8b" aria-label="Pinterest">
+      <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=%5bAngular%5d%20%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%82%92%e8%a4%87%e6%95%b0%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a7%e4%bd%bf%e7%94%a8%e3%81%99%e3%82%8b&body=Check out this article: https%3a%2f%2fblog.pompolly.com%2fposts%2f2022%2fangular-custom-pipe-more-modules%2f" aria-label="Email">
+      <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fblog.pompolly.com%2fposts%2f2022%2fangular-custom-pipe-more-modules%2f&title=%5bAngular%5d%20%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%82%92%e8%a4%87%e6%95%b0%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a7%e4%bd%bf%e7%94%a8%e3%81%99%e3%82%8b" aria-label="Pocket">
+      <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fblog.pompolly.com%2fposts%2f2022%2fangular-custom-pipe-more-modules%2f&title=%5bAngular%5d%20%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%82%92%e8%a4%87%e6%95%b0%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a7%e4%bd%bf%e7%94%a8%e3%81%99%e3%82%8b" aria-label="reddit">
+      <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fblog.pompolly.com%2fposts%2f2022%2fangular-custom-pipe-more-modules%2f&name=%5bAngular%5d%20%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%82%92%e8%a4%87%e6%95%b0%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a7%e4%bd%bf%e7%94%a8%e3%81%99%e3%82%8b&description=Angular%e3%81%a7%e4%bd%9c%e6%88%90%e3%81%97%e3%81%9f%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%82%92%e8%a4%87%e6%95%b0%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a7%e4%bd%bf%e7%94%a8%e3%81%97%e3%81%9f%e3%81%84%e3%80%82%20%20%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%82%92%e8%a4%87%e6%95%b0%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e6%a7%8b%e6%88%90%e3%81%a7%e4%bd%bf%e7%94%a8%e3%81%99%e3%82%8b%e3%81%a8%e4%b8%8b%e8%a8%98%e3%82%a8%e3%83%a9%e3%83%bc%e3%81%8c%e7%99%ba%e7%94%9f%e3%81%99%e3%82%8b%e3%80%82%20error%20NG8004%3a%20No%20pipe%20found%20with%20name%20%26%2339%3b%26%2339%3b.%20%20%e5%85%b1%e6%9c%89%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%82%92%e4%bd%9c%e6%88%90%e3%81%97export-import%e3%82%92%e3%81%99%e3%82%8b%e3%81%93%e3%81%a8%e3%81%a7%e8%a7%a3%e6%b1%ba%e3%81%99%e3%82%8b%e3%80%82%28%e5%8f%82%e8%80%83%3a%20Sharing%20Modules%20%7c%20Angular%29%20%e2%80%bb%e4%b8%8b%e8%a8%98%e3%80%81%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e5%90%8d%e3%82%84%e3%83%91%e3%82%a4%e3%83%97%e5%90%8d%e3%80%81%e5%90%84%e3%83%91%e3%82%b9%e3%81%af%e9%81%a9%e5%88%87%e3%81%aa%e5%80%a4%e3%81%ab%e5%a4%89%e6%9b%b4%e3%81%99%e3%82%8b%e3%81%93%e3%81%a8%e3%80%82%20%201.%20%e5%85%b1%e6%9c%89%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%82%92%e4%bd%9c%e6%88%90%20%20%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e4%bd%9c%e6%88%90%e3%81%ae%e3%82%b3%e3%83%9e%e3%83%b3%e3%83%89%20ng%20g%20module%20Shared%20%20%202.%20%e5%85%b1%e6%9c%89%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%ab%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%81%ab%e3%81%a4%e3%81%84%e3%81%a6%e8%a8%98%e8%bf%b0%20%20shared.module.ts%e3%83%95%e3%82%a1%e3%82%a4%e3%83%ab%e3%81%ab%e4%b8%8b%e8%a8%98%e3%82%92%e8%a8%98%e8%bf%b0%e3%80%82%20%20import%20import%20%7b%20CustomPipe%20%7d%20from%20%26%2339%3b.%2fpipe%2fcustom.pipe%26%2339%3b%3b%20%20declarations%20declarations%3a%20%5b%20CustomPipe%20%5d%20%20exports%20exports%3a%20%5b%20CustomPipe%20%5d%20%20%20%20%203.%20%e4%bd%bf%e7%94%a8%e3%81%97%e3%81%9f%e3%81%84%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%ab%e5%85%b1%e6%9c%89%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%82%92%e3%82%a4%e3%83%b3%e3%83%9d%e3%83%bc%e3%83%88%20%20%e4%be%8b%e3%81%88%e3%81%b0%e3%80%81app.module.ts%e3%83%95%e3%82%a1%e3%82%a4%e3%83%ab%e3%81%ab%e4%b8%8b%e8%a8%98%e3%82%92%e8%a8%98%e8%bf%b0%e3%81%99%e3%82%8b%e3%81%a8AppModule%e3%81%a7%e4%bd%bf%e7%94%a8%e5%8f%af%e8%83%bd%e3%81%ab%e3%81%aa%e3%82%8b%e3%80%82%20%20import%20import%20%7b%20SharedModule%20%7d%20from%20%26%2339%3b.%2fshared%2fshared.module%26%2339%3b%3b%20%20imports%20imports%3a%20%5b%20SharedModule%20%5d%20%20%20%20%20%20%e3%83%a1%e3%83%a2%e3%80%82%20app." aria-label="Tumblr">
+      <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fblog.pompolly.com%2fposts%2f2022%2fangular-custom-pipe-more-modules%2f&t=%5bAngular%5d%20%e3%82%ab%e3%82%b9%e3%82%bf%e3%83%a0%e3%83%91%e3%82%a4%e3%83%97%e3%82%92%e8%a4%87%e6%95%b0%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%a7%e4%bd%bf%e7%94%a8%e3%81%99%e3%82%8b" aria-label="Hacker News">
+      <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      
+        <a id="menu-toggle" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;" aria-label="Menu">
+          <i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="toc-toggle" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;" aria-label="TOC">
+          <i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share-toggle" class="icon" href="#" onclick="$('#share-footer').toggle();return false;" aria-label="Share">
+          <i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" aria-label="Top of Page">
+          <i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+
+  <footer id="footer">
+    <div class="footer-left">
+        Copyright  &copy; 2022  pompolly 
+        - <a href="/privacy-policy">Privacy Policy</a>
+    </div>
+    <div class="footer-right">
+        <nav>
+            <ul>
+                 
+                <li><a href="/">Home</a></li>
+                 
+                <li><a href="/posts">Writings</a></li>
+                 
+                <li><a href="/categories">Categories</a></li>
+                 
+                <li><a href="/about">About</a></li>
+                
+            </ul>
+        </nav>
+    </div>
+</footer>
+
+
+  </div>
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+
+<script src=/js/code-copy.js></script>
+
+
+
+
+</html>
